@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+  (function() {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    window.requestAnimationFrame = requestAnimationFrame;
+  })();
+
   $(window).on('beforeunload', function() {
       $(window).scrollTop(0);
   });
@@ -34,7 +39,7 @@ $(document).ready(function () {
   teehanNav.init();
 
   $('.mobile-toggle').on('click touchstart', function(event) {
-    showHideNav();
+    requestAnimationFrame(showHideNav);
     event.preventDefault();
   });
 
@@ -44,9 +49,9 @@ $(document).ready(function () {
 
   function showHideNav() {
     if ($('#site-nav-mobile').hasClass('expanded')) {
-      hideNav();
+      requestAnimationFrame(hideNav);
     } else {
-      showNav();
+      requestAnimationFrame(showNav);
     }
   }
 
