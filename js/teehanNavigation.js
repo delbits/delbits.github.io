@@ -207,10 +207,10 @@
     detachPoint: 600,
     hideShowOffset: 6,
     classes: {
-      detached: "nav-detached",
-      hidden: "nav-hidden"
+      detached: 'nav-detached',
+      hidden: 'nav-hidden'
     }
-  }
+  };
 
   return TeehanLax;
 }));
