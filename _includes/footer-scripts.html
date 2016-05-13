@@ -1,7 +1,59 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.min.js"></script>
 <script src="{{ "/js/teehanNavigation.min.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/js/typed.min.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/js/main.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/typed.min.js" | prepend: site.baseurl }}"></script-->
+<!-- <script defer src="{{ "/js/main.js" | prepend: site.baseurl }}"></script> -->
+
+<script>
+
+function loadExternalResource(url, type){
+  return new Promise(function(resolve, reject) {
+    var tag;
+    if (!type) {
+      var match = url.match(/\.([^.]+)$/);
+      if (match) {
+        type = match[1];
+      }
+    }
+    if (!type) {
+      type = "js";       // default to js
+    }
+    if (type === 'css'){
+      tag = document.createElement("link");
+      tag.type = 'text/css';
+      tag.rel = 'stylesheet';
+      tag.href = url;
+    }
+    else if (type === "js")
+    {
+      tag = document.createElement("script");
+      tag.type = "text/javascript";
+      tag.src = url;
+    }
+    if (tag) {
+      tag.onload = function() {resolve(url);};
+      tag.onerror = function() {reject(url);};
+      document.getElementsByTagName("head")[0].appendChild(tag);
+    }
+  });
+}
+
+function loadMultipleExternalResources(itemsToLoad) {
+  var promises = itemsToLoad.map(function(url) {
+    return loadExternalResource(url);
+  });
+  return Promise.all(promises);
+}
+
+var urls = ['https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js',
+          'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.min.js',
+          '/js/teehanNavigation.min.js',
+          '/js/typed.min.js'];
+
+loadMultipleExternalResources(urls).then(function() {
+  loadExternalResource('/js/main.js')
+});
+</script>
