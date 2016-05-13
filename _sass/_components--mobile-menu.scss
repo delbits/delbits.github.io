@@ -1,6 +1,7 @@
 $size--site-nav-mobile-padding-top:         $size--site-nav-height;
 $color--branding-text:                   $white;
 $color--branding-text-hover:             $color--tertiary;
+$color--branding-text-alternative-hover: $color--accent;
 $color--layout-default-background:       $color--accent;
 $color--layout-alternative-background:   $color--tertiary;
 
@@ -68,6 +69,10 @@ $color--layout-alternative-background:   $color--tertiary;
     & > a:hover &__text,
     & > a:hover &__info {
       color: $color--branding-text-hover;
+
+      .alternative & {
+        color: $color--branding-text-alternative-hover;
+      }
     }
 
     &__text,
